@@ -1,12 +1,30 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <el-menu mode="horizontal" router>
+      <el-menu-item index="home">处理中心</el-menu-item>
+      <el-menu-item index="login">消息中心</el-menu-item>
+      <el-menu-item index="about">关于</el-menu-item>
+    </el-menu>
     <router-view />
   </div>
 </template>
+
+<script>
+import http from "./config/request";
+export default {
+  data() {
+    return {
+      activeIndex: "2"
+    };
+  },
+  created() {
+    http.get("/123").then();
+  },
+  methods: {
+
+  }
+};
+</script>
 
 <style lang="stylus">
 #app
@@ -15,5 +33,4 @@
   -moz-osx-font-smoothing grayscale
   text-align center
   color #2c3e50
-  margin-top 60px
 </style>
