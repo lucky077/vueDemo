@@ -42,7 +42,7 @@
       "@vue/prettier"
     ],
     "rules": {
-
+      "semi":"off"
     },
     "parserOptions": {
       "parser": "babel-eslint"
