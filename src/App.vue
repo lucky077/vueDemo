@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import http from "./config/request";
 export default {
   data() {
     return {
@@ -18,7 +17,7 @@ export default {
     };
   },
   created() {
-    http.get("/123").then();
+
   },
   methods: {
 

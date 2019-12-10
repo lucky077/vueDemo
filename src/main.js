@@ -7,7 +7,7 @@ import "element-ui/lib/theme-chalk/index.css";
 import "view-design/dist/styles/iview.css";
 import axios from "./config/request";
 
-Vue.prototype.axios = axios;
+Vue.prototype.http = axios;
 Vue.use(ElementUi);
 Vue.config.productionTip = false;
 
