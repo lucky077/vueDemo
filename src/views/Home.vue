@@ -17,7 +17,7 @@
         <template slot-scope="scope">
           <el-button
                   size="mini"
-                  @click="handleEdit(scope.row)">编辑</el-button>
+                  @click="handleLogin(scope.row)">登录</el-button>
           <el-button
                   size="mini"
                   type="danger"
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+  import hex_md5 from "../assets/js/md5-min";
 export default {
   name: "home",
   data() {
@@ -64,6 +65,44 @@ export default {
           this.copy(res,this)
           this.loading = false;
         });
+    },
+//     serviceCode: 10010003
+//     XKey: 1960
+//     returnUrl: index.jsp
+//     userName: 123123
+//     browserPwd:
+//     VerifyCodeKey: wqyf
+//     VerifyCodeStateKey: 69168628fd744dcbb1a537c73a35d46b
+//     userPwd: 48f37e8b79096b56dd38fc96fed53556
+    handleLogin(row){
+
+      this.$prompt('<img src="https://passport.jumpw.com/VerifyCodeServlet?codetype=LOGIN&codeid=4342097b21084a869912a2c684ca2115&r=0.5541817118690344" onclick="this.src=\'https://passport.jumpw.com/VerifyCodeServlet?codetype=LOGIN&codeid=4342097b21084a869912a2c684ca2115&r=\'+Math.random() ">', '输入验证码', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        dangerouslyUseHTMLString: true
+      }).then(({ value }) => {
+        this.http.post("api/login",{
+          body:{
+            serviceCode:10010003,
+            XKey:1960,
+            returnUrl:"index.jsp",
+            userName:row.account,
+            VerifyCodeKey:value,
+            VerifyCodeStateKey:"4342097b21084a869912a2c684ca2115",
+            userPwd:hex_md5(hex_md5(row.pwd) + 1960)
+          }
+        })
+        .then(res => {
+          window.console.log(res)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });
+      });
+
+
     },
     handleCheck(row){
       this.http.post("api/proxy",{url:"https://passport.jumpw.com/user.do"
